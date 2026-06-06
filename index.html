@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Inteligentny chatbot doradzający ubiór na podstawie pogody" />
+  <title>WeatherBot 🌤️ — Doradca Ubioru</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+
+  <!-- Animated background particles -->
+  <div class="bg-particles" aria-hidden="true">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- Main wrapper -->
+  <div class="app-wrapper">
+
+    <!-- Header -->
+    <header class="app-header" role="banner">
+      <div class="header-left">
+        <div class="bot-avatar" aria-hidden="true">🤖</div>
+        <div class="header-info">
+          <h1 class="header-title">WeatherBot</h1>
+          <span class="header-status" id="status-indicator">
+            <span class="status-dot" aria-hidden="true"></span>
+            Online
+          </span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button
+          id="btn-city"
+          class="action-btn"
+          title="Pobierz pogodę dla miasta"
+          aria-label="Pobierz pogodę dla miasta"
+        >
+          🌍 Miasto
+        </button>
+        <button
+          id="btn-clear"
+          class="action-btn"
+          title="Wyczyść historię czatu"
+          aria-label="Wyczyść historię czatu"
+        >
+          🗑️ Wyczyść
+        </button>
+        <button
+          id="btn-dark"
+          class="action-btn action-btn--icon"
+          title="Przełącz dark mode"
+          aria-label="Przełącz dark mode"
+        >
+          🌙
+        </button>
+      </div>
+    </header>
+
+    <!-- Chat window -->
+    <main class="chat-container" role="main">
+      <div
+        id="chat-box"
+        class="chat-box"
+        role="log"
+        aria-live="polite"
+        aria-label="Historia rozmowy"
+      ></div>
+
+      <!-- Typing indicator -->
+      <div id="typing-indicator" class="typing-indicator" aria-live="polite" aria-label="Bot pisze" hidden>
+        <div class="typing-avatar" aria-hidden="true">🤖</div>
+        <div class="typing-dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </main>
+
+    <!-- City modal -->
+    <div id="city-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+      <div class="modal-card">
+        <h2 id="modal-title">🌍 Podaj miasto</h2>
+        <p>Bot pobierze aktualną pogodę i doradzi ubiór.</p>
+        <input
+          type="text"
+          id="city-input"
+          class="modal-input"
+          placeholder="np. Warszawa, Kraków, London…"
+          aria-label="Nazwa miasta"
+          autocomplete="off"
+        />
+        <div class="modal-api-row">
+          <label for="api-key-input">OpenWeather API Key <span class="optional">(opcjonalnie)</span></label>
+          <input
+            type="password"
+            id="api-key-input"
+            class="modal-input"
+            placeholder="Twój klucz API…"
+            aria-label="Klucz API OpenWeatherMap"
+          />
+          <small>Zarejestruj się na <a href="https://openweathermap.org/api" target="_blank" rel="noopener">openweathermap.org</a></small>
+        </div>
+        <div class="modal-actions">
+          <button id="btn-city-confirm" class="btn-primary">Pobierz pogodę 🌤️</button>
+          <button id="btn-city-cancel" class="btn-secondary">Anuluj</button>
+        </div>
+      </div>
+    </div>
+    <div id="modal-backdrop" class="modal-backdrop" hidden></div>
+
+    <!-- Input area -->
+    <footer class="chat-footer" role="contentinfo">
+      <div class="input-row">
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="user-input"
+            class="user-input"
+            placeholder="Opisz pogodę lub podaj temperaturę… (np. 'Jest 5 stopni i pada deszcz')"
+            aria-label="Wpisz wiadomość do bota"
+            autocomplete="off"
+            maxlength="500"
+          />
+        </div>
+        <button id="btn-send" class="btn-send" aria-label="Wyślij wiadomość">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="quick-suggestions" role="navigation" aria-label="Szybkie sugestie">
+        <button class="suggestion-chip" data-text="Jest -5 stopni i sypie śnieg">🥶 Zima, śnieg</button>
+        <button class="suggestion-chip" data-text="Jest 7 stopni i pada deszcz">🌧️ Chłodny deszcz</button>
+        <button class="suggestion-chip" data-text="Jest 22 stopnie i słonecznie">☀️ Ciepły dzień</button>
+        <button class="suggestion-chip" data-text="Jest 35 stopni i bardzo gorąco">🔥 Upał</button>
+        <button class="suggestion-chip" data-text="Jest 15 stopni, pochmurno i wieje">💨 Wietrzno</button>
+      </div>
+    </footer>
+
+  </div><!-- /.app-wrapper -->
+
+  <script src="script.js"></script>
+</body>
+</html>
